@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 const Form = (props) => {
 
@@ -13,12 +13,14 @@ const Form = (props) => {
     else if (days < 1 || days > 365) alert('Only values between 1 - 365 accepted!')
     else
     {
-        fetch('/main', {
+        fetch('http://localhost:5000/main', {
             'method': 'POST',
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify(data)
         }).then(() => {
-            console.log('ADDED')
+            console.log('ADDED', data)
+        }).catch((error) => {
+          console.log(error)
         })
     }
   }
