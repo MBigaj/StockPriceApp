@@ -1,6 +1,12 @@
-import React from 'react'
+import { useState } from 'react'
 
-const Form = (props) => {
+const Form = () => {
+
+  const [show_image, setShow] = useState(false)
+
+  const onSubmithandler = () => {
+    console.log('hi')
+  }
 
   const onSubmit = (event) => {
     event.preventDefault()
@@ -13,6 +19,7 @@ const Form = (props) => {
     else if (days < 1 || days > 365) alert('Only values between 1 - 365 accepted!')
     else
     {
+      onSubmithandler()
         fetch('http://localhost:5000/main', {
             'method': 'POST',
             headers: { 'Content-Type': 'application/json'},
@@ -34,8 +41,8 @@ const Form = (props) => {
       <div>
         <label className='text'>Choose a company:</label>
           <select name="company" className='select-field'>
-            <option value="AAPL">Apple</option>
-            <option value="TSLA">Tesla</option>
+            <option value="Apple">Apple</option>
+            <option value="Tesla">Tesla</option>
           </select> <br></br>
       </div>
 
@@ -44,6 +51,7 @@ const Form = (props) => {
           Predict 
         </button>
       </div>
+    <img src='D:/Coding/React/StockPriceApp/flask-server/machine_learning/graph/plot.png'></img>
     </form>
   )
 }
