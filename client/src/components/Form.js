@@ -1,11 +1,9 @@
 import { useState } from 'react'
+import plot from './graph/plot.png'
 
 const Form = () => {
 
   const [show_image, setShow] = useState(false)
-
-  const onSubmithandler = () => {
-  }
 
   const onSubmit = (event) => {
     event.preventDefault()
@@ -14,21 +12,26 @@ const Form = () => {
     const company = event.target[1].value
     const data = { days, company }
 
-    if (days === '') alert('Please enter all fields!')
+    if (days == '') alert('Please enter all fields!')
     else if (days < 1 || days > 365) alert('Only values between 1 - 365 accepted!')
     else
     {
-      onSubmithandler()
+      setShow(false)
         fetch('http://localhost:5000/main', {
             'method': 'POST',
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify(data)
         }).then(() => {
+            setShow(true)
             console.log('ADDED', data)
         }).catch((error) => {
           console.log(error)
         })
     }
+  }
+
+  const changeColor = (event) => {
+    event.currentTarget.style.backgroundColor = 'skyblue'
   }
 
   return (
@@ -49,11 +52,17 @@ const Form = () => {
       </div>
 
       <div>
-        <button type='submit' className='btn'>
+        <button 
+        type='submit' 
+        className='btn' 
+        onClick={changeColor}>
           Predict 
         </button>
       </div>
-      <img src='../../../flask-server/machine_learning/graph/plot.png'></img>
+
+      <div>
+        {(show_image == true) ? (<img src={plot} />) : (<p>Predicting...</p>)}
+      </div>
     </form>
   )
 }

@@ -43,7 +43,7 @@ def recursive_prediction(predicted_prices, prediction_days, input_period, model)
 
 
 def plot_data(actual_data, predicted_prices, company_name):
-    dir = 'machine_learning/graph'
+    dir = '../client/src/components/graph'
     plt.plot(actual_data, color='black', label=f'Actual Data')
     plt.plot(predicted_prices, color='red', label=f'Predicted Prices')
     plt.title(f'{company_name} shares')
@@ -53,7 +53,9 @@ def plot_data(actual_data, predicted_prices, company_name):
 
     if os.path.isdir(dir) is False:
         os.mkdir(dir)
+
     plt.savefig(f'{dir}/plot.png')
+    plt.close()
 
 
 def activate_model(input_days, company):
@@ -97,16 +99,16 @@ def activate_model(input_days, company):
 
     model = create_model(x_train)
 
-    # model.load_weights('saved_model/')
+    model.load_weights(f'machine_learning/taught_models/{company_name}/')
     # select_model(company_name, model)
 
-    model.compile(optimizer='adam', loss='mean_squared_error')
-    model.fit(x_train, x_labels, epochs=1)
+    # model.compile(optimizer='adam', loss='mean_squared_error')
+    # model.fit(x_train, x_labels, epochs=30)
 
-    if os.path.isdir(f'machine_learning/taught_models/{company_name}') == False:
-        os.mkdir(f'machine_learning/taught_models/{company_name}')
+    # if os.path.isdir(f'machine_learning/taught_models/{company_name}') == False:
+    #     os.mkdir(f'machine_learning/taught_models/{company_name}')
 
-    model.save_weights(f'machine_learning/taught_models/{company_name}/')
+    # model.save_weights(f'machine_learning/taught_models/{company_name}/')
 
     actual_data = test_dataset * scale
 
