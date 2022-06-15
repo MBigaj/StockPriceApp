@@ -30,14 +30,10 @@ const Form = () => {
     }
   }
 
-  const changeColor = (event) => {
-    event.currentTarget.style.backgroundColor = 'skyblue'
-  }
-
   return (
     <form onSubmit={onSubmit} method='POST' className='form'>
       <div>
-          <input type='number' placeholder='1 - 365' name='prediction_period' className='text-field'/> <br></br>
+          <input type='number' placeholder='1 - 365' name='prediction_period' className='text-field'/>
       </div>
 
       <div>
@@ -48,20 +44,19 @@ const Form = () => {
             <option value="Meta,META">Meta</option>
             <option value="Microsoft,MSFT">Microsoft</option>
             <option value="Electronic Arts,EA">EA</option>
-          </select> <br></br>
+          </select>
       </div>
 
       <div>
         <button 
         type='submit' 
-        className='btn' 
-        onClick={changeColor}>
+        className='button button--pan' >
           Predict 
         </button>
       </div>
 
       <div>
-        {(show_image == true) ? (<img src={plot} />) : (<p>Predicting...</p>)}
+        {(show_image == true) ? (<img src={plot} width='800' />) : (<p>Predicting...</p>)}
       </div>
     </form>
   )

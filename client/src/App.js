@@ -1,9 +1,8 @@
 import Form from './components/Form'
 
 function App() {
-
   return (
-    <div>
+    <div className='main_div'>
       <Form />
     </div>
   )
