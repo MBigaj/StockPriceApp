@@ -47,8 +47,8 @@ def plot_data(actual_data, predicted_prices, company_name):
     plt.plot(actual_data, color='black', label=f'Actual Data')
     plt.plot(predicted_prices, color='red', label=f'Predicted Prices')
     plt.title(f'{company_name} shares')
-    plt.xlabel('Time')
-    plt.ylabel(f'{company_name} share price')
+    plt.xlabel('Time ( days )')
+    plt.ylabel(f'{company_name} share price $')
     plt.legend()
 
     if os.path.isdir(dir) is False:
@@ -56,16 +56,19 @@ def plot_data(actual_data, predicted_prices, company_name):
     plt.savefig(f'{dir}/plot.png')
 
 
-def activate_model(input_days, company_name):
+def activate_model(input_days, company):
 
     input_days = int(input_days)
 
-    company = 'TSLA'
+    company = company.split(',')
 
-    start = dt.datetime(2012, 1, 1)
+    company_name = company[0]
+    ticker_symbol = company[1]
+
+    start = dt.datetime(1900, 1, 1)
     end = dt.datetime.now()
 
-    data = web.DataReader(company, 'yahoo', start, end) # Ticker symbol !!!
+    data = web.DataReader(ticker_symbol, 'yahoo', start, end) # Ticker symbol !!!
 
     # Scaling data ( data / max_val )
     scale = max(data['Close'].values)
@@ -98,9 +101,12 @@ def activate_model(input_days, company_name):
     # select_model(company_name, model)
 
     model.compile(optimizer='adam', loss='mean_squared_error')
-    model.fit(x_train, x_labels, epochs=5)
+    model.fit(x_train, x_labels, epochs=1)
 
-    # model.save_weights('Tesla/')
+    if os.path.isdir(f'machine_learning/taught_models/{company_name}') == False:
+        os.mkdir(f'machine_learning/taught_models/{company_name}')
+
+    model.save_weights(f'machine_learning/taught_models/{company_name}/')
 
     actual_data = test_dataset * scale
 

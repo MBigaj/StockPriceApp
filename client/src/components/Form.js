@@ -5,7 +5,6 @@ const Form = () => {
   const [show_image, setShow] = useState(false)
 
   const onSubmithandler = () => {
-    console.log('hi')
   }
 
   const onSubmit = (event) => {
@@ -41,8 +40,11 @@ const Form = () => {
       <div>
         <label className='text'>Choose a company:</label>
           <select name="company" className='select-field'>
-            <option value="Apple">Apple</option>
-            <option value="Tesla">Tesla</option>
+            <option value="Apple,AAPL">Apple</option>
+            <option value="Tesla,TSLA">Tesla</option>
+            <option value="Meta,META">Meta</option>
+            <option value="Microsoft,MSFT">Microsoft</option>
+            <option value="Electronic Arts,EA">EA</option>
           </select> <br></br>
       </div>
 
@@ -51,7 +53,7 @@ const Form = () => {
           Predict 
         </button>
       </div>
-    <img src='D:/Coding/React/StockPriceApp/flask-server/machine_learning/graph/plot.png'></img>
+      <img src='../../../flask-server/machine_learning/graph/plot.png'></img>
     </form>
   )
 }

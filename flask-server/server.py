@@ -16,7 +16,8 @@ def get_form():
     data = request.get_json()
     days = data['days']
     company = data['company']
-    # activate_model(days, company)
+    print(data)
+    activate_model(days, company)
     return 'done'
 
 if __name__ == '__main__':
