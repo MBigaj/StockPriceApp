@@ -1,4 +1,4 @@
-from contextlib import closing
+# from contextlib import closing
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -27,7 +27,7 @@ def create_model(x_train):
 
 
 def select_model(company_name, model):
-    model.load_weights(f'TaughtModels/{company_name}/')
+    model.load_weights(f'machine_learning/taught_models/{company_name}/')
 
 
 def recursive_prediction(predicted_prices, prediction_days, input_period, model):
@@ -89,7 +89,7 @@ def activate_model(input_days, company):
     x_train = []
     x_labels = []
 
-    # Assigning 30 days for every single unit of stock history
+    # Assigning 30 previous days for every single unit
     for i in range(prediction_days, len(training_dataset)):
         x_train.append(training_dataset[i - prediction_days:i, 0])
         x_labels.append(training_dataset[i, 0])
@@ -102,6 +102,7 @@ def activate_model(input_days, company):
     model.load_weights(f'machine_learning/taught_models/{company_name}/')
     # select_model(company_name, model)
 
+    ''' FOR TEACHING THE MODEL AND SAVING WEIGHTS '''
     # model.compile(optimizer='adam', loss='mean_squared_error')
     # model.fit(x_train, x_labels, epochs=30)
 
@@ -124,10 +125,11 @@ def activate_model(input_days, company):
     predicted_prices = model.predict(x_test)
 
 
-    # Predicting the next x days and comparing them to actual share prices ( TO BE FIXED ) *.*
+    # Predicting the next x days and comparing them to actual share prices
 
     predicted_prices = recursive_prediction(predicted_prices, prediction_days, input_days, model)
 
+    # Scaling back predicted prices for plotting
     predicted_prices *= scale
 
     plot_data(actual_data, predicted_prices, company_name)
