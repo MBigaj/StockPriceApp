@@ -3,6 +3,11 @@
     border-radius: 15px;
 }
 
+.box_style {
+	width: 60px;
+	height: 60px;
+}
+
 .text-field {
     font-size: 30px;
     width: 27%;

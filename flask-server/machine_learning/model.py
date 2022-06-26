@@ -1,4 +1,3 @@
-# from contextlib import closing
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -24,10 +23,6 @@ def create_model(x_train):
     model.add(Dropout(0.2))
     model.add(Dense(units=1)) # Prediction for the next day ( stock price )
     return model
-
-
-def select_model(company_name, model):
-    model.load_weights(f'machine_learning/taught_models/{company_name}/')
 
 
 def recursive_prediction(predicted_prices, prediction_days, input_period, model):
@@ -58,7 +53,7 @@ def plot_data(actual_data, predicted_prices, company_name):
     plt.close()
 
 
-def activate_model(input_days, company):
+def activate_model(input_days, company, setting=False):
 
     input_days = int(input_days)
 
@@ -99,17 +94,18 @@ def activate_model(input_days, company):
 
     model = create_model(x_train)
 
-    model.load_weights(f'machine_learning/taught_models/{company_name}/')
-    # select_model(company_name, model)
+    # IF SETTING = TRUE, TRAIN MODEL AGAIN
+    if not setting:
+        model.load_weights(f'machine_learning/taught_models/{company_name}/')
+    else:
+        model.compile(optimizer='adam', loss='mean_squared_error')
+        model.fit(x_train, x_labels, epochs=30)
 
-    ''' FOR TEACHING THE MODEL AND SAVING WEIGHTS '''
-    # model.compile(optimizer='adam', loss='mean_squared_error')
-    # model.fit(x_train, x_labels, epochs=30)
+        if os.path.isdir(f'machine_learning/taught_models/{company_name}') == False:
+            os.mkdir(f'machine_learning/taught_models/{company_name}')
 
-    # if os.path.isdir(f'machine_learning/taught_models/{company_name}') == False:
-    #     os.mkdir(f'machine_learning/taught_models/{company_name}')
+        model.save_weights(f'machine_learning/taught_models/{company_name}/')
 
-    # model.save_weights(f'machine_learning/taught_models/{company_name}/')
 
     actual_data = test_dataset * scale
 

@@ -5,12 +5,21 @@ const Form = () => {
 
   const [show_image, setShow] = useState(false)
 
+  const handleChange = e => {
+    if (e.target.checked) {
+      e.target.value = '1'
+    } else {
+      e.target.value = ''
+    }
+  }
+
   const onSubmit = (event) => {
     event.preventDefault()
 
     const days = event.target[0].value
     const company = event.target[1].value
-    const data = { days, company }
+    const learn = event.target[2].value
+    const data = { days, company, learn }
 
     if (days == '') alert('Please enter all fields!')
     else if (days < 1 || days > 365) alert('Only values between 1 - 365 accepted!')
@@ -19,7 +28,7 @@ const Form = () => {
       setShow(false)
         fetch('http://localhost:5000/main', {
             'method': 'POST',
-            headers: { 'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         }).then(() => {
             setShow(true)
@@ -48,6 +57,11 @@ const Form = () => {
       </div>
 
       <div>
+        <p className='text'>Teach model again?</p>
+        <input type='checkbox' name='learn' id='is_learning' onChange={handleChange} className='box_style'></input>
+      </div>
+
+      <div>
         <button 
         type='submit' 
         className='button button--pan' >
@@ -56,7 +70,7 @@ const Form = () => {
       </div>
 
       <div>
-        {(show_image == true) ? (<img src={plot} width='800' />) : (<p>Predicting...</p>)}
+        {(show_image == true) ? (<img src={plot} width='800'/>) : (<p>Predicting...</p>)}
       </div>
     </form>
   )

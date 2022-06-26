@@ -16,8 +16,15 @@ def get_form():
     data = request.get_json()
     days = data['days']
     company = data['company']
+    setting = data['learn']
+
+    if setting == 'on':
+        setting = False
+
+    setting = bool(setting)
     print(data)
-    activate_model(days, company)
+
+    activate_model(days, company, setting)
     return 'done'
 
 if __name__ == '__main__':
